@@ -3,10 +3,13 @@ import corepytools as corepy
 from PIL import Image
 import json
 
-CoreOfStudy = 'Public'
+
 
 Root_path = os.path.dirname(os.getcwd())
-Corebeta=json.load(open(os.path.join(Root_path + '/CoreData/CoreBeta/'   +  CoreOfStudy + '.json')))
+Run_settings=json.load(open(os.path.join(Root_path + '/CorePycodes/' + 'Run_settings' + '.json')))
+Corebeta=json.load(open(os.path.join(Root_path + '/CoreData/CoreBeta/'   +  Run_settings['CoreOfStudy']  +'.json')))
+
+Formation_names = '-'.join(Run_settings["Formation"]+Run_settings["Formation_2"]) # Would like to have Formation_names defined in Corebeta
 
 # Two things here that could use improvement: core_depth and the locations for the core box cropping
 
@@ -14,13 +17,13 @@ Corebeta=json.load(open(os.path.join(Root_path + '/CoreData/CoreBeta/'   +  Core
 core_depth = 3978 # top depth of starting corebox photo
 
 
-corepy.ImageDir(Corebeta['corename']) #sets up folder structure
+corepy.ImageDir(Run_settings['CoreOfStudy']) #sets up folder structure
 
 Root_path = os.path.dirname(os.getcwd())
-CoreBoxPhotos= os.path.join(Root_path + '/CoreData/CoreBoxPhotos/' + Corebeta['corename'])
+CoreBoxPhotos= os.path.join(Root_path + '/CoreData/CoreBoxPhotos/' + Run_settings['CoreOfStudy'])
 
 CoreBoxPhotos_cropped= os.path.join(Root_path + '/CoreData/CoreBoxPhotos/' + '/' + Corebeta['corename'] + "_cropped")  # new directory that will be made
-CoretubeFolder = os.path.join(Root_path + '/CoreData/CoreTubes/' + '/' + Corebeta['corename'] + "_tubes_" + Corebeta['ImageType']) # new directory that will be made
+CoretubeFolder = os.path.join(Root_path + '/CoreData/CoreTubes/' + '/' + Run_settings['CoreOfStudy'] + "_tubes_" + Corebeta['ImageType']) # new directory that will be made
 
 # Makes folders if they do not exist already. 
 if not os.path.exists(CoreBoxPhotos_cropped):
